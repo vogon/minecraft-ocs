@@ -36,24 +36,6 @@ end
 
 function on_telemetry_poll(_, data)
     last_data = data
-
-    term.clear()
-
-    print('trip mode:', data['trip_mode'])
-    print('reactor active:', data['reactor_active'])
-    print('power buffer:', string.format('%d RF', data['energy_stored']))
-    print('fuel temp:', string.format('%f oC', data['fuel_temp']))
-    print('casing temp:', string.format('%f oC', data['casing_temp']))
-    print('energy output:', string.format('%f RF', data['energy_produced_last_tick']))
-
-    for index, value in ipairs(data['rod_positions']) do
-        print(string.format('rod %d pos:', index), string.format('%d%%', value))
-    end
-
-    print()
-    print('t: trip mode')
-    print('i: control rods in 1%')
-    print('o: control rods out 1%')
 end
 
 local key_up_listener = event.listen('key_up', on_key_up)
@@ -69,5 +51,23 @@ end
 event.listen('interrupted', on_interrupted)
 
 while not should_exit do
+    term.clear()
+
+    print('trip mode:', last_data['trip_mode'])
+    print('reactor active:', last_data['reactor_active'])
+    print('power buffer:', string.format('%d RF', last_data['energy_stored']))
+    print('fuel temp:', string.format('%f oC', last_data['fuel_temp']))
+    print('casing temp:', string.format('%f oC', last_data['casing_temp']))
+    print('energy output:', string.format('%f RF', last_data['energy_produced_last_tick']))
+
+    for index, value in ipairs(data['rod_positions']) do
+        print(string.format('rod %d pos:', index), string.format('%d%%', value))
+    end
+
+    print()
+    print('t: trip mode')
+    print('i: control rods in 1%')
+    print('o: control rods out 1%')
+
     os.sleep(0.5)
 end
