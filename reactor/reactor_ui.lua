@@ -8,27 +8,27 @@ local should_exit = false
 function on_key_up(_, kbd_address, char, code, player_name)
     print('on_key_up')
     local old_pos = last_data['rod_positions'][0]
-	local new_pos
+    local new_pos
 
-	if string.char(char) == 'i' then
-		new_pos = old_pos + 1
-	elseif string.char(char) == 'o' then
-		new_pos = old_pos - 1
-	elseif string.char(char) == 't' then
-		if trip_mode == 'automatic' then
-			event.push(events.set_trip_mode, 'override on')
-		elseif trip_mode == 'override on' then
-			event.push(events.set_trip_mode, 'override off')
-		else
-			event.push(events.set_trip_mode, 'automatic')
-		end
-	end
+    if string.char(char) == 'i' then
+        new_pos = old_pos + 1
+    elseif string.char(char) == 'o' then
+        new_pos = old_pos - 1
+    elseif string.char(char) == 't' then
+        if trip_mode == 'automatic' then
+            event.push(events.set_trip_mode, 'override on')
+        elseif trip_mode == 'override on' then
+            event.push(events.set_trip_mode, 'override off')
+        else
+            event.push(events.set_trip_mode, 'automatic')
+        end
+    end
 
-	if new_pos > 100 then
-		new_pos = 100
-	elseif new_pos < 0 then
-		new_pos = 0
-	end  
+    if new_pos > 100 then
+        new_pos = 100
+    elseif new_pos < 0 then
+        new_pos = 0
+    end  
 
     event.push(events.set_all_rods_level, new_pos)
 end
@@ -50,9 +50,9 @@ function on_telemetry_poll(_, data)
     end
 
     print()
-	print('t: trip mode')
-	print('i: control rods in 1%')
-	print('o: control rods out 1%')
+    print('t: trip mode')
+    print('i: control rods in 1%')
+    print('o: control rods out 1%')
 end
 
 local key_up_listener = event.listen('key_up', on_key_up)
