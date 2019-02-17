@@ -1,5 +1,6 @@
 local event = require('event')
 local events = require('reactord_events')
+local term = require('term')
 
 local last_data = {}
 
